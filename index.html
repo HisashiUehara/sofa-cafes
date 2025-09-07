@@ -3,39 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>上野＋日暮里 かわいいソファカフェ Pick</title>
+  <title>上野＋日暮里 かわいいソファカフェ</title>
   <meta name="description" content="上野・日暮里エリアの、横並びで座れるソファ席が魅力のカフェを厳選してご紹介。">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>☕</text></svg>">
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    /* Soft shadow & rounded look */
-    .card { box-shadow: 0 10px 20px -10px rgba(244, 63, 94, 0.2); }
-  </style>
+  <style>.card{box-shadow:0 10px 20px -10px rgba(244,63,94,.2);}</style>
 </head>
 <body class="min-h-screen bg-rose-50 text-slate-800">
+  <!-- ▼ ヘッダー（Pick/フィルタ類を削除） -->
   <header class="sticky top-0 z-10 backdrop-blur bg-rose-50/80 border-b border-rose-100">
-    <div class="mx-auto max-w-6xl px-4 py-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <div class="mx-auto max-w-6xl px-4 py-4">
       <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">
-        上野＋日暮里 かわいいソファカフェ <span class="text-rose-500">Pick</span>
+        上野＋日暮里 かわいいソファカフェ
       </h1>
-      <div class="flex flex-wrap gap-2 items-center">
-        <select id="area" class="px-3 py-2 rounded-xl bg-white shadow border border-rose-200 focus:outline-none">
-          <option value="All">全エリア</option>
-          <option value="Ueno">上野</option>
-          <option value="Nippori">日暮里</option>
-        </select>
-        <label class="flex items-center gap-2 px-3 py-2 rounded-xl bg-white shadow border border-rose-200 cursor-pointer select-none">
-          <input type="checkbox" id="sideBySideOnly" />
-          横並びソファだけ表示
-        </label>
-        <select id="smoking" class="px-3 py-2 rounded-xl bg-white shadow border border-rose-200 focus:outline-none">
-          <option value="any">喫煙/禁煙すべて</option>
-          <option value="禁煙">禁煙のみ</option>
-          <option value="喫煙">喫煙可を含む</option>
-        </select>
-        <button id="copyBtn" class="px-4 py-2 rounded-xl font-semibold shadow bg-white border border-rose-200 hover:bg-rose-100" title="いまの絞り込み状態の共有リンクをコピー">共有リンクをコピー</button>
-      </div>
     </div>
   </header>
 
@@ -47,52 +28,31 @@
 
   <script>
     const CAFES = [
-      { id:"chanoma-ueno", name:"yusoshi chano‑ma 上野", area:"Ueno", walk:"徒歩3分（上野マルイ9F）", vibe:"和モダン / ゆったり / 小上がりベッドソファ", highlight:"横並びで“ごろごろ”できる小上がりソファ", sofaSideBySide:true, smoking:"完全禁煙", price:"ランチ¥1,200〜¥1,800", hours:"土 11:00–23:00（L.O.22:00）", links:{ map:"https://maps.app.goo.gl/yxV3mJ4eJqF4iJ5f8", site:"https://www.dd-holdings.jp/shops/chanoma/ueno", review:"https://tabelog.com/tokyo/A1311/A131101/13117492/" }, img:"https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1280&auto=format&fit=crop", notes:"土日ランチは基本先着順。人気なので早め来店がおすすめ。" },
-      { id:"kojo-ueno", name:"喫茶 古城（Kojo）", area:"Ueno", walk:"徒歩2分", vibe:"昭和レトロ / シャンデリア / 静かめ", highlight:"2人用“ロマンスシート”（横並びソファ）", sofaSideBySide:true, smoking:"喫煙可", price:"コーヒー¥800前後", hours:"土 9:00–20:00（日祝休）", links:{ map:"https://maps.app.goo.gl/tc8yW62K5t4s6i9A9", site:"", review:"https://tabelog.com/tokyo/A1311/A131101/13028658/" }, img:"https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=1280&auto=format&fit=crop", notes:"雰囲気は最高。ただし煙草の香りが苦手なら別候補を。現金推奨。" },
-      { id:"bonnard-ueno", name:"珈琲処ボナール", area:"Ueno", walk:"徒歩5〜6分（御徒町寄り）", vibe:"純喫茶 / レトロ / ほどよく賑やか", highlight:"壁沿いのベンチソファで横並びOK", sofaSideBySide:true, smoking:"完全禁煙", price:"コーヒー¥600前後", hours:"土 11:00–21:30", links:{ map:"https://maps.app.goo.gl/kFJ5c8D7r8bF8q4J8", site:"http://bonnard.ikidane.com/", review:"https://tabelog.com/tokyo/A1311/A131101/13261583/" }, img:"https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?q=80&w=1280&auto=format&fit=crop", notes:"レトロ気分でしっぽり。豆挽きたて。" },
-      { id:"blueleaf-ueno", name:"Blue Leaf Café 上野HSビル", area:"Ueno", walk:"徒歩5分", vibe:"明るいモダン / 広々 / Wi‑Fi・電源", highlight:"ソファ席複数。片側に並んで座りやすい", sofaSideBySide:false, smoking:"完全禁煙", price:"ドリンク〜¥800 / 軽食あり", hours:"土 10:00–19:00", links:{ map:"https://maps.app.goo.gl/2b8u7Yf2W2Q3C4uN7", site:"https://blueleafcafe.jp/", review:"https://tabelog.com/tokyo/A1311/A131101/13258759/" }, img:"https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=1280&auto=format&fit=crop", notes:"横並び仕様ではないがソファ片側に並ぶカップル多め。" },
-      { id:"wired-ueno", name:"WIRED CAFE アトレ上野", area:"Ueno", walk:"駅直結（徒歩1分以内）", vibe:"スタイリッシュ / にぎやか / 便利", highlight:"ボックスソファで同席横並びも可", sofaSideBySide:false, smoking:"完全禁煙", price:"¥1,000〜¥1,500", hours:"土 8:00–23:00", links:{ map:"https://maps.app.goo.gl/HmH8Z1eUjD3oY7WQ6", site:"https://www.atre.co.jp/store/ueno/shop/detail/2362", review:"https://tabelog.com/tokyo/A1311/A131101/13203642/" }, img:"https://images.unsplash.com/photo-1494346480775-936a9f0d0872?q=80&w=1280&auto=format&fit=crop", notes:"土日ランチは予約不可。回転早め。" },
-      { id:"newtokyo-nippori", name:"談話室 ニュートーキョー（日暮里）", area:"Nippori", walk:"駅直結（徒歩0分）", vibe:"広々 / レトロ豪華 / BGM心地よい", highlight:"【全席ソファ】横並びも余裕のゆったり感", sofaSideBySide:true, smoking:"分煙", price:"¥800〜¥1,500", hours:"土 10:00–20:00 目安", links:{ map:"https://maps.app.goo.gl/9t1Jm7n2pCH3z7dE8", site:"", review:"https://tabelog.com/tokyo/A1311/A131105/13148532/" }, img:"https://images.unsplash.com/photo-1495774856032-8b90bbb32b3e?q=80&w=1280&auto=format&fit=crop", notes:"“くっついて座る”が叶う代表格。" },
-      { id:"hagi-nippori", name:"HAGI CAFE", area:"Nippori", walk:"徒歩5分（谷中エリア）", vibe:"古民家リノベ / 木の温もり / しっとり", highlight:"2階にソファ席。寄り添ってのんびり", sofaSideBySide:true, smoking:"完全禁煙", price:"¥900〜¥1,500", hours:"土 10:00–20:00 目安", links:{ map:"https://maps.app.goo.gl/4q7mXQLaVncn2m4F8", site:"https://www.hagiso.jp/", review:"https://tabelog.com/tokyo/A1311/A131105/13153860/" }, img:"https://images.unsplash.com/photo-1470337458703-46ad1756a187?q=80&w=1280&auto=format&fit=crop", notes:"フードも個性的。混雑前の早め来店◎" },
-      { id:"cafe-c-nippori", name:"Cafe C（カフェ C）", area:"Nippori", walk:"徒歩4〜5分", vibe:"かわいい / フェミニン / スイーツ", highlight:"ソファ席あり。パフェ人気", sofaSideBySide:true, smoking:"完全禁煙", price:"¥1,000〜¥1,800", hours:"土 11:00–20:00 目安", links:{ map:"https://maps.app.goo.gl/Jx8o3NqgJqL5QKfG8", site:"", review:"https://tabelog.com/tokyo/A1311/A131105/13276161/" }, img:"https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?q=80&w=1280&auto=format&fit=crop", notes:"小ぢんまり。甘党デートに◎" },
-      { id:"higurashi-nippori", name:"ひぐらしベーカリー", area:"Nippori", walk:"徒歩5分", vibe:"パン屋併設 / ほのぼの / テラスも", highlight:"2階にソファ席あり", sofaSideBySide:false, smoking:"完全禁煙", price:"¥800〜¥1,500", hours:"土 8:00–18:00 目安", links:{ map:"https://maps.app.goo.gl/3Kk3x1G7wqk9x2oK6", site:"https://higurashi-bakery.com/", review:"https://tabelog.com/tokyo/A1311/A131105/13202135/" }, img:"https://images.unsplash.com/photo-1495462911434-be47104d70fa?q=80&w=1280&auto=format&fit=crop", notes:"まったり朝〜昼に。パンが主役。" },
-      { id:"darjeeling-nippori", name:"ダージリン 日暮里店", area:"Nippori", walk:"徒歩2分", vibe:"エキゾチック / ちょい贅沢 / ティー", highlight:"ふかふかソファで紅茶をゆっくり", sofaSideBySide:false, smoking:"完全禁煙", price:"¥2,000〜¥3,999（アフタヌーン可）", hours:"土 11:00–22:00 目安", links:{ map:"https://maps.app.goo.gl/2Eo6rjW6k8o3pZ9P7", site:"http://www.darjeeling.co.jp/nippori.html", review:"https://tabelog.com/tokyo/A1311/A131105/13003019/" }, img:"https://images.unsplash.com/photo-1461988091159-192b6df7054f?q=80&w=1280&auto=format&fit=crop", notes:"価格は少し上。雰囲気重視のティー利用に。" }
+      { id:"chanoma-ueno", name:"yusoshi chano-ma 上野", area:"Ueno", walk:"徒歩3分（上野マルイ9F）", vibe:"和モダン / ゆったり / 小上がりベッドソファ", highlight:"横並びで“ごろごろ”できる小上がりソファ", price:"ランチ¥1,200〜¥1,800", hours:"土 11:00–23:00（L.O.22:00）", links:{ map:"https://maps.app.goo.gl/yxV3mJ4eJqF4iJ5f8", site:"https://www.dd-holdings.jp/shops/chanoma/ueno" }, img:"https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1280&auto=format&fit=crop", notes:"土日ランチは基本先着順。人気なので早め来店がおすすめ。" },
+      { id:"kojo-ueno", name:"喫茶 古城（Kojo）", area:"Ueno", walk:"徒歩2分", vibe:"昭和レトロ / シャンデリア / 静かめ", highlight:"2人用“ロマンスシート”（横並びソファ）", price:"コーヒー¥800前後", hours:"土 9:00–20:00（日祝休）", links:{ map:"https://maps.app.goo.gl/tc8yW62K5t4s6i9A9", site:"" }, img:"https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=1280&auto=format&fit=crop", notes:"雰囲気は最高。ただし煙草の香りが苦手なら別候補を。現金推奨。" },
+      { id:"bonnard-ueno", name:"珈琲処ボナール", area:"Ueno", walk:"徒歩5〜6分（御徒町寄り）", vibe:"純喫茶 / レトロ / ほどよく賑やか", highlight:"壁沿いのベンチソファで横並びOK", price:"コーヒー¥600前後", hours:"土 11:00–21:30", links:{ map:"https://maps.app.goo.gl/kFJ5c8D7r8bF8q4J8", site:"http://bonnard.ikidane.com/" }, img:"https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?q=80&w=1280&auto=format&fit=crop", notes:"レトロ気分でしっぽり。豆挽きたて。" },
+      { id:"blueleaf-ueno", name:"Blue Leaf Café 上野HSビル", area:"Ueno", walk:"徒歩5分", vibe:"明るいモダン / 広々 / Wi-Fi・電源", highlight:"ソファ席複数。片側に並んで座りやすい", price:"ドリンク〜¥800 / 軽食あり", hours:"土 10:00–19:00", links:{ map:"https://maps.app.goo.gl/2b8u7Yf2W2Q3C4uN7", site:"https://blueleafcafe.jp/" }, img:"https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=1280&auto=format&fit=crop", notes:"横並び仕様ではないがソファ片側に並ぶカップル多め。" },
+      { id:"wired-ueno", name:"WIRED CAFE アトレ上野", area:"Ueno", walk:"駅直結（徒歩1分以内）", vibe:"スタイリッシュ / にぎやか / 便利", highlight:"ボックスソファで同席横並びも可", price:"¥1,000〜¥1,500", hours:"土 8:00–23:00", links:{ map:"https://maps.app.goo.gl/HmH8Z1eUjD3oY7WQ6", site:"https://www.atre.co.jp/store/ueno/shop/detail/2362" }, img:"https://images.unsplash.com/photo-1494346480775-936a9f0d0872?q=80&w=1280&auto=format&fit=crop", notes:"土日ランチは予約不可。回転早め。" },
+      { id:"newtokyo-nippori", name:"談話室 ニュートーキョー（日暮里）", area:"Nippori", walk:"駅直結（徒歩0分）", vibe:"広々 / レトロ豪華 / BGM心地よい", highlight:"【全席ソファ】横並びも余裕のゆったり感", price:"¥800〜¥1,500", hours:"土 10:00–20:00 目安", links:{ map:"https://maps.app.goo.gl/9t1Jm7n2pCH3z7dE8", site:"" }, img:"https://images.unsplash.com/photo-1495774856032-8b90bbb32b3e?q=80&w=1280&auto=format&fit=crop", notes:"“くっついて座る”が叶う代表格。" },
+      { id:"hagi-nippori", name:"HAGI CAFE", area:"Nippori", walk:"徒歩5分（谷中エリア）", vibe:"古民家リノベ / 木の温もり / しっとり", highlight:"2階にソファ席。寄り添ってのんびり", price:"¥900〜¥1,500", hours:"土 10:00–20:00 目安", links:{ map:"https://maps.app.goo.gl/4q7mXQLaVncn2m4F8", site:"https://www.hagiso.jp/" }, img:"https://images.unsplash.com/photo-1470337458703-46ad1756a187?q=80&w=1280&auto=format&fit=crop", notes:"フードも個性的。混雑前の早め来店◎" },
+      { id:"cafe-c-nippori", name:"Cafe C（カフェ C）", area:"Nippori", walk:"徒歩4〜5分", vibe:"かわいい / フェミニン / スイーツ", highlight:"ソファ席あり。パフェ人気", price:"¥1,000〜¥1,800", hours:"土 11:00–20:00 目安", links:{ map:"https://maps.app.goo.gl/Jx8o3NqgJqL5QKfG8", site:"" }, img:"https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?q=80&w=1280&auto=format&fit=crop", notes:"小ぢんまり。甘党デートに◎" },
+      { id:"higurashi-nippori", name:"ひぐらしベーカリー", area:"Nippori", walk:"徒歩5分", vibe:"パン屋併設 / ほのぼの / テラスも", highlight:"2階にソファ席あり", price:"¥800〜¥1,500", hours:"土 8:00–18:00 目安", links:{ map:"https://maps.app.goo.gl/3Kk3x1G7wqk9x2oK6", site:"https://higurashi-bakery.com/" }, img:"https://images.unsplash.com/photo-1495462911434-be47104d70fa?q=80&w=1280&auto=format&fit=crop", notes:"まったり朝〜昼に。パンが主役。" },
+      { id:"darjeeling-nippori", name:"ダージリン 日暮里店", area:"Nippori", walk:"徒歩2分", vibe:"エキゾチック / ちょい贅沢 / ティー", highlight:"ふかふかソファで紅茶をゆっくり", price:"¥2,000〜¥3,999（アフタヌーン可）", hours:"土 11:00–22:00 目安", links:{ map:"https://maps.app.goo.gl/2Eo6rjW6k8o3pZ9P7", site:"http://www.darjeeling.co.jp/nippori.html" }, img:"https://images.unsplash.com/photo-1461988091159-192b6df7054f?q=80&w=1280&auto=format&fit=crop", notes:"価格は少し上。雰囲気重視のティー利用に。" }
     ];
 
-    // ---- URL state ----
-    const params = new URLSearchParams(location.search);
-    const initial = {
-      area: params.get("area") || "All",
-      sideBySideOnly: params.get("sideBySideOnly") === "1",
-      smoking: params.get("smoking") || "any",
-    };
-
-    const $area = document.getElementById("area");
-    const $side = document.getElementById("sideBySideOnly");
-    const $smoking = document.getElementById("smoking");
-    $area.value = initial.area;
-    $side.checked = initial.sideBySideOnly;
-    $smoking.value = initial.smoking;
-
-    function updateUrl() {
-      const p = new URLSearchParams();
-      if ($area.value !== "All") p.set("area", $area.value);
-      if ($side.checked) p.set("sideBySideOnly", "1");
-      if ($smoking.value !== "any") p.set("smoking", $smoking.value);
-      history.replaceState(null, "", `${location.pathname}?${p.toString()}`);
-    }
-
-    function matchesFilters(c) {
-      const areaOk = ($area.value === "All" || c.area === $area.value);
-      const sideOk = (!$side.checked || c.sofaSideBySide);
-      const smokeOk = ($smoking.value === "any" || c.smoking.includes($smoking.value));
-      return areaOk && sideOk && smokeOk;
+    // maps.app.goo.gl をPCでも確実に開けるURLへフォールバック
+    function mapUrl(cafe) {
+      const m = cafe.links && cafe.links.map ? cafe.links.map : "";
+      if (m && !m.includes("maps.app.goo.gl")) return m; // すでに通常URLならそのまま
+      const areaJa = cafe.area === "Ueno" ? "上野" : "日暮里";
+      const q = `${cafe.name} ${areaJa}`;
+      return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
     }
 
     function render() {
       const grid = document.getElementById("grid");
       grid.innerHTML = "";
-      CAFES.filter(matchesFilters).forEach(cafe => {
+      CAFES.forEach(cafe => {
         const article = document.createElement("article");
         article.className = "card bg-white rounded-2xl shadow hover:shadow-lg transition overflow-hidden border border-rose-100";
         article.innerHTML = `
@@ -108,49 +68,21 @@
             <ul class="text-sm grid grid-cols-2 gap-2">
               <li class="bg-rose-50 rounded-lg px-2 py-1">🚶‍♂️ ${cafe.walk}</li>
               <li class="bg-rose-50 rounded-lg px-2 py-1">💺 ${cafe.highlight}</li>
-              <li class="bg-rose-50 rounded-lg px-2 py-1">🚭 ${cafe.smoking}</li>
-              <li class="bg-rose-50 rounded-lg px-2 py-1">⏰ ${cafe.hours}</li>
+              <li class="bg-rose-50 rounded-lg px-2 py-1 col-span-2">⏰ ${cafe.hours}</li>
             </ul>
             <p class="text-sm">💡 ${cafe.notes}</p>
             <div class="flex flex-wrap gap-2 pt-1">
-              <a href="${cafe.links.map}" target="_blank" rel="noreferrer" class="px-3 py-2 rounded-xl bg-rose-600 text-white text-sm font-semibold hover:bg-rose-700">Googleマップ</a>
+              <a href="${mapUrl(cafe)}" target="_blank" rel="noreferrer" class="px-3 py-2 rounded-xl bg-rose-600 text-white text-sm font-semibold hover:bg-rose-700">Googleマップ</a>
               ${cafe.links.site ? `<a href="${cafe.links.site}" target="_blank" rel="noreferrer" class="px-3 py-2 rounded-xl bg-white border border-rose-200 text-sm font-semibold hover:bg-rose-100">公式</a>` : ""}
-              ${cafe.links.review ? `<a href="${cafe.links.review}" target="_blank" rel="noreferrer" class="px-3 py-2 rounded-xl bg-white border border-rose-200 text-sm font-semibold hover:bg-rose-100">レビュー</a>` : ""}
             </div>
             <div class="text-xs text-slate-500">${cafe.price}</div>
           </div>`;
         grid.appendChild(article);
       });
-
-      if (grid.children.length === 0) {
-        grid.innerHTML = '<p class="text-slate-600">条件に合うカフェが見つかりませんでした。フィルターを緩めてみてください。</p>';
-      }
     }
 
-    $area.addEventListener("change", () => { updateUrl(); render(); });
-    $side.addEventListener("change", () => { updateUrl(); render(); });
-    $smoking.addEventListener("change", () => { updateUrl(); render(); });
-
-    document.getElementById("copyBtn").addEventListener("click", async () => {
-      try {
-        await navigator.clipboard.writeText(location.href);
-        const btn = document.getElementById("copyBtn");
-        const original = btn.textContent;
-        btn.textContent = "リンクをコピーしました✓";
-        btn.classList.remove("bg-white");
-        btn.classList.add("bg-emerald-500","text-white");
-        setTimeout(() => {
-          btn.textContent = original;
-          btn.classList.add("bg-white");
-          btn.classList.remove("bg-emerald-500","text-white");
-        }, 1600);
-      } catch (e) {
-        alert("URLコピーに失敗しました…");
-      }
-    });
-
-    // initial render
     render();
   </script>
 </body>
 </html>
+
